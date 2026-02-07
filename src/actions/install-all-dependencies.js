@@ -24,9 +24,9 @@ export async function installAllDependencies() {
     await runCommand(pm, ["install", ...MAIN_DEPENDENCIES], dest);
     await runCommand(pm, ["install", "-D", ...MAIN_DEV_DEPENDENCIES], dest);
 
-    spinner.succeed("Main packages installed successfully.");
+    spinner.succeed("Dependencies installed successfully.");
   } catch (error) {
-    spinner.fail("Failed to install main packages.");
-    throw new Exception(`Failed to install main packages: ${error.message}`);
+    spinner.fail("Failed to install dependencies.");
+    throw new Exception(`Failed to install dependencies: ${error.message}`);
   }
 }

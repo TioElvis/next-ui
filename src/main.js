@@ -8,9 +8,10 @@ import prompts from "prompts";
 
 import { onCancel } from "./lib/utils.js";
 import { Exception } from "./lib/exception.js";
-import { CWD, THEME_COLORS } from "./constants.js";
+import { initShadcnUI } from "./actions/init-shadcn-ui.js";
 import { setThemeColor } from "./actions/set-theme-color.js";
 import { creatingProject } from "./actions/creating-project.js";
+import { CWD, SHADCN_COMPONENTS, THEME_COLORS } from "./constants.js";
 import { copyingTemplateFiles } from "./actions/copying-template-files.js";
 import { configurePackageJson } from "./actions/configure-package-json.js";
 import { installAllDependencies } from "./actions/install-all-dependencies.js";
@@ -65,6 +66,22 @@ async function bootstrap() {
                 value: e.value,
               };
             }),
+            initial: 0,
+          },
+          {
+            type: "confirm",
+            name: "useShadcnUI",
+            message: "Would you like to include shadcn/ui components?",
+            initial: true,
+          },
+          {
+            type: (prev) => (prev ? "multiselect" : null),
+            name: "shadcnComponents",
+            message: "Which shadcn/ui components would you like to use?",
+            choices: SHADCN_COMPONENTS.map((e) => {
+              return { ...e };
+            }),
+            instructions: false,
           },
           {
             type: "select",
@@ -80,7 +97,13 @@ async function bootstrap() {
         { onCancel },
       );
 
-      const { projectName, packageManager, themeColor } = responses;
+      const {
+        projectName,
+        packageManager,
+        themeColor,
+        useShadcnUI,
+        shadcnComponents,
+      } = responses;
 
       context.projectName = projectName;
       context.dest = path.join(CWD, context.projectName);
@@ -91,8 +114,9 @@ async function bootstrap() {
       configurePackageJson();
       setThemeColor(themeColor);
       await installAllDependencies();
-      // Install shadcn if user wants to use it
-      // Init theme color
+      if (useShadcnUI) {
+        await initShadcnUI(shadcnComponents);
+      }
 
       console.log(chalk.green("\nProject setup complete!"));
     } catch (error) {
