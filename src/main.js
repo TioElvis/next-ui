@@ -6,9 +6,10 @@ import path from "node:path";
 import chalk from "chalk";
 import prompts from "prompts";
 
-import { CWD } from "./constants.js";
 import { onCancel } from "./lib/utils.js";
 import { Exception } from "./lib/exception.js";
+import { CWD, THEME_COLORS } from "./constants.js";
+import { setThemeColor } from "./actions/set-theme-color.js";
 import { creatingProject } from "./actions/creating-project.js";
 import { copyingTemplateFiles } from "./actions/copying-template-files.js";
 import { configurePackageJson } from "./actions/configure-package-json.js";
@@ -55,18 +56,22 @@ async function bootstrap() {
             initial: "my-app",
           },
           {
-            type: "confirm",
-            name: "installDependencies",
-            message: "Do you want to install dependencies now?",
-            initial: true,
+            type: "select",
+            name: "themeColor",
+            message: "Which theme color would you like to use?",
+            choices: THEME_COLORS.map((e) => {
+              return {
+                title: `${chalk.hex(e.hex)("●")} ${e.title}`,
+                value: e.value,
+              };
+            }),
           },
           {
-            type: (prev) => (prev ? "select" : null),
+            type: "select",
             name: "packageManager",
             message: "Which package manager do you want to use?",
             choices: [
               { title: "npm", value: "npm" },
-              { title: "yarn", value: "yarn" },
               { title: "pnpm", value: "pnpm" },
             ],
             initial: 0,
@@ -75,7 +80,7 @@ async function bootstrap() {
         { onCancel },
       );
 
-      const { projectName, installDependencies, packageManager } = responses;
+      const { projectName, packageManager, themeColor } = responses;
 
       context.projectName = projectName;
       context.dest = path.join(CWD, context.projectName);
@@ -84,9 +89,8 @@ async function bootstrap() {
       creatingProject();
       copyingTemplateFiles();
       configurePackageJson();
-      if (installDependencies) {
-        await installAllDependencies();
-      }
+      setThemeColor(themeColor);
+      await installAllDependencies();
       // Install shadcn if user wants to use it
       // Init theme color
 
