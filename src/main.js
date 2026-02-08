@@ -112,11 +112,11 @@ async function bootstrap() {
       creatingProject();
       copyingTemplateFiles();
       configurePackageJson();
-      setThemeColor(themeColor);
       await installAllDependencies();
       if (useShadcnUI) {
         await initShadcnUI(shadcnComponents);
       }
+      setThemeColor(themeColor);
 
       console.log(chalk.green("\nProject setup complete!"));
     } catch (error) {
