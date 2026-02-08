@@ -6,13 +6,13 @@ import { context } from "../main.js";
 import { Exception } from "../lib/exception.js";
 
 export function creatingProject() {
-  if (fs.existsSync(context.dest)) {
-    throw new Error(
-      `Directory ${context.projectName} already exists. Choose a different project name.`,
-    );
-  }
-
   try {
+    if (fs.existsSync(context.dest)) {
+      throw new Error(
+        `Directory ${context.projectName} already exists. Choose a different project name.`,
+      );
+    }
+
     fs.mkdirSync(context.dest, { recursive: true });
     console.log(
       chalk.white(

@@ -6,14 +6,20 @@ import path from "node:path";
 import chalk from "chalk";
 import prompts from "prompts";
 
+import {
+  CUSTOM_COMPONENTS,
+  CWD,
+  SHADCN_COMPONENTS,
+  THEME_COLORS,
+} from "./constants.js";
 import { onCancel } from "./lib/utils.js";
 import { Exception } from "./lib/exception.js";
 import { initShadcnUI } from "./actions/init-shadcn-ui.js";
 import { setThemeColor } from "./actions/set-theme-color.js";
 import { creatingProject } from "./actions/creating-project.js";
-import { CWD, SHADCN_COMPONENTS, THEME_COLORS } from "./constants.js";
 import { copyingTemplateFiles } from "./actions/copying-template-files.js";
 import { configurePackageJson } from "./actions/configure-package-json.js";
+import { addingCustomComponents } from "./actions/add-custom-components.js";
 import { installAllDependencies } from "./actions/install-all-dependencies.js";
 
 export const context = {
@@ -21,6 +27,8 @@ export const context = {
   projectName: null,
   packageManager: null,
   isNewProject: true,
+  useShadcnUI: false,
+  shadcnComponents: [],
 };
 
 process.on("SIGINT", () => onCancel());
@@ -84,6 +92,15 @@ async function bootstrap() {
             instructions: false,
           },
           {
+            type: "multiselect",
+            name: "customComponents",
+            message: "Which custom components would you like to use?",
+            choices: CUSTOM_COMPONENTS.map((e) => {
+              return { ...e };
+            }),
+            instructions: false,
+          },
+          {
             type: "select",
             name: "packageManager",
             message: "Which package manager do you want to use?",
@@ -103,18 +120,22 @@ async function bootstrap() {
         themeColor,
         useShadcnUI,
         shadcnComponents,
+        customComponents,
       } = responses;
 
       context.projectName = projectName;
       context.dest = path.join(CWD, context.projectName);
       context.packageManager = packageManager;
+      context.useShadcnUI = useShadcnUI;
+      context.shadcnComponents = shadcnComponents;
 
       creatingProject();
       copyingTemplateFiles();
       configurePackageJson();
+      addingCustomComponents(customComponents);
       await installAllDependencies();
-      if (useShadcnUI) {
-        await initShadcnUI(shadcnComponents);
+      if (context.useShadcnUI) {
+        await initShadcnUI(context.shadcnComponents);
       }
       setThemeColor(themeColor);
 

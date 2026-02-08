@@ -8,6 +8,7 @@ export const CWD = path.resolve(process.cwd());
 
 export const THEME_FOLDER_PATH = path.join(__dirname, "themes");
 export const TEMPLATE_FOLDER_PATH = path.join(__dirname, "template");
+export const CUSTOM_COMPONENTS_FOLDER_PATH = path.join(__dirname, "components");
 
 export const MAIN_DEPENDENCIES = [
   "next@latest",
@@ -340,5 +341,13 @@ export const SHADCN_COMPONENTS = [
     title: "Tooltip",
     value: "tooltip",
     description: "Informative hover text.",
+  },
+];
+
+export const CUSTOM_COMPONENTS = [
+  {
+    title: "Rich Text Editor",
+    value: "editor",
+    description: "Rich HTML text editor component.",
   },
 ];

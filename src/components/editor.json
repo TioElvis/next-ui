@@ -1,0 +1,25 @@
+{
+  "shadcnNeeded": true,
+  "shadcnComponentsNeeded": [
+    "tooltip",
+    "button",
+    "field",
+    "input",
+    "dropdown-menu",
+    "dialog",
+    "input-group",
+    "tabs"
+  ],
+  "dependenciesNeeded": [
+    "@tiptap/extension-highlight@latest",
+    "@tiptap/extension-image@latest",
+    "@tiptap/extension-placeholder@latest",
+    "@tiptap/react@latest",
+    "@tiptap/starter-kit@latest",
+    "@tiptap/pm@latest"
+  ],
+  "devDependenciesNeeded": [],
+  "isFolder": true,
+  "componentFolder": "editor",
+  "componentFileExtension": null
+}
