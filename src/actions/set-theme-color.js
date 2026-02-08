@@ -18,8 +18,10 @@ export function setThemeColor(themeColor) {
     const dest = path.join(context.dest, "src/app/globals.css");
 
     fs.copyFileSync(themeFilePath, dest);
-    console.log(chalk.white("\nTheme color set successfully."));
+    console.log(
+      chalk.white(`\n${chalk.green("✔")} Theme color set successfully.`),
+    );
   } catch (error) {
-    throw new Exception(`Could not set theme color: ${error.message}`);
+    throw new Exception(`Could not set theme color: ${error.message}`, true);
   }
 }

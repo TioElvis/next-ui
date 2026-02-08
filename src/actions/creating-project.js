@@ -14,8 +14,15 @@ export function creatingProject() {
 
   try {
     fs.mkdirSync(context.dest, { recursive: true });
-    console.log(chalk.white(`\nCreating project ${context.projectName}.`));
+    console.log(
+      chalk.white(
+        `\n${chalk.green("✔")} Creating project ${context.projectName}.`,
+      ),
+    );
   } catch (error) {
-    throw new Exception(`Could not create project folder: ${error.message}`);
+    throw new Exception(
+      `Could not create project folder: ${error.message}`,
+      true,
+    );
   }
 }

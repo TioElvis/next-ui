@@ -9,8 +9,11 @@ import { TEMPLATE_FOLDER_PATH } from "../constants.js";
 export function copyingTemplateFiles() {
   try {
     fs.cpSync(TEMPLATE_FOLDER_PATH, context.dest, { recursive: true });
-    console.log(chalk.white("\nCopying template files."));
+    console.log(chalk.white(`\n${chalk.green("✔")} Copying template files.`));
   } catch (error) {
-    throw new Exception(`Could not copy template files: ${error.message}`);
+    throw new Exception(
+      `Could not copy template files: ${error.message}`,
+      true,
+    );
   }
 }

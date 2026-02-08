@@ -27,6 +27,9 @@ export async function installAllDependencies() {
     spinner.succeed("Dependencies installed successfully.");
   } catch (error) {
     spinner.fail("Failed to install dependencies.");
-    throw new Exception(`Failed to install dependencies: ${error.message}`);
+    throw new Exception(
+      `Failed to install dependencies: ${error.message}`,
+      true,
+    );
   }
 }

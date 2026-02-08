@@ -122,6 +122,12 @@ async function bootstrap() {
     } catch (error) {
       if (error instanceof Exception) {
         console.log(chalk.red(error.message));
+        if (error.deleteDest && fs.existsSync(context.dest)) {
+          fs.rmSync(context.dest, { recursive: true, force: true });
+          console.log(
+            chalk.yellow("Cleaned up the created project directory."),
+          );
+        }
       } else {
         console.log(chalk.red("An unexpected error occurred."));
         console.error(error);

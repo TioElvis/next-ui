@@ -23,8 +23,11 @@ export function configurePackageJson() {
 
   try {
     fs.writeFileSync(packageJsonPath, JSON.stringify(packageJSON, null, 2));
-    console.log(chalk.white("\nPackage.json configured."));
+    console.log(chalk.white(`\n${chalk.green("✔")} Package.json configured.`));
   } catch (error) {
-    throw new Exception("Failed to configure package.json. Please try again.");
+    throw new Exception(
+      "Failed to configure package.json. Please try again.",
+      true,
+    );
   }
 }

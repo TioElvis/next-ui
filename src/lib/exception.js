@@ -1,6 +1,9 @@
 export class Exception extends Error {
-  constructor(message) {
+  deleteDest;
+
+  constructor(message, deleteDest = false) {
     super(message);
     this.name = "Exception";
+    this.deleteDest = deleteDest;
   }
 }

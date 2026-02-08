@@ -20,7 +20,7 @@ async function installComponents(components) {
     spinner.succeed("shadcn/ui components installed.");
   } catch (error) {
     spinner.fail("Failed to install shadcn/ui components.");
-    throw new Exception("Failed to install shadcn/ui components.");
+    throw new Exception("Failed to install shadcn/ui components.", true);
   }
 }
 
@@ -49,7 +49,7 @@ export async function initShadcnUI(components) {
     spinner.succeed("shadcn/ui installed");
   } catch (error) {
     spinner.fail("Failed to install shadcn/ui.");
-    throw new Exception("Failed to install shadcn/ui.");
+    throw new Exception("Failed to install shadcn/ui.", true);
   }
 
   if (components.length > 0) {
