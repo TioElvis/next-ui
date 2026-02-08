@@ -20,7 +20,6 @@ export const MAIN_DEV_DEPENDENCIES = [
   "@types/node@latest",
   "@types/react@latest",
   "@types/react-dom@latest",
-  "babel-plugin-react-compiler@latest",
   "eslint@latest",
   "eslint-config-next@latest",
   "tailwindcss@latest",
