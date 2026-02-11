@@ -17,6 +17,7 @@ export function addingCustomComponents(components) {
 
   if (components.length === 0) {
     console.log(chalk.yellow("No components selected."));
+    return;
   }
 
   try {
