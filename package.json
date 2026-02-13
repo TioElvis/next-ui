@@ -1,6 +1,6 @@
 {
   "name": "@tioelvis/next-ui",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Interactive CLI to scaffold a Next.js project with customizable presets and configurations.",
   "type": "module",
   "bin": {
